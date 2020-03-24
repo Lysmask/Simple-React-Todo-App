@@ -1,70 +1,26 @@
-.outerBox {
-  display: flex;
-  min-height: 100vh;
-  border: 5px solid black;
-  justify-content: center;
+.taskTableHeader {
+  font-size: 2rem;
+  text-decoration: underline;
+  width: 100%;
+  background-color: cyan;
 }
-
-.addTaskContainer {
-  display: flex;
-  justify-content: space-between;
+.taskTableHeader td {
+  width:25%;
   padding: 1rem;
+  padding-bottom: 2rem;
+  background-color: black;
+  color: white;
+}
+.taskTableData {
+  width: 100%;
+}
+.tableData {
+  width: 25%;
+  padding: .5rem;
   font-size: 1.5rem;
 }
-.addTaskContainer input[type=text] {
-background-color: orange;
-border: none;
-border-bottom: 1px solid black;
-}
-input[type=button] {
-/* .addTaskContainer input[type=button] { */
-  background-color: none;
-  padding: .3rem;
-  border: 2px solid black;
+
+
+tr:nth-of-type(odd){
   background-color: orange;
-  color: black;
-  font-weight: 600;
 }
-
-.taskList {
-  text-align: center;
-  margin-top: 2rem;
-  border: 5px solid black;
-  min-height: 600px;
-  height: fit-content;
-  min-width: 550px;
-  padding-bottom: 2rem;
-  background-color: orange;
-  box-shadow: 4px 4px 4px black;
-  border-radius: .75rem;
-}
-.taskList h3 {
-  font-size: 1.5rem !important;
-}
-.taskList h3::before {
- content: "► ";
-}
-
-.taskListContainer {
-  padding-top: 2rem;
-}
-
-.taskListHeader {
-  padding: 1rem;
-  border-bottom: 4px solid black;
-}
-
-.singleTask {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  padding: 1rem;
-  padding-left: 1rem;
-  margin-bottom: .5rem;
-}
-
-.singleTaskName {
-  text-align: left;
-}
-

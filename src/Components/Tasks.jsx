@@ -1,77 +1,134 @@
 import React, { Component } from 'react';
 import '../App.css'
-import Task from './Task'
+// import Task from './Task'
+import axios from 'axios';
 
 class Tasks extends Component {
   state = { 
     taskArray : [],
-    newTask : '',
-    lastId: 0,
-   }
-
-   onDelete = (id) => {
-   let taskArray = this.state.taskArray.filter(e => e.id !== id )
-
-    this.setState({
-      taskArray
-    })
-   }
-
-   handleNewTask = (event) => {
-    this.setState({
-      newTask: event.target.value,
-    })
+    newTask : {
+      description : '',
+      author: '',
+      location: '',
+      solved: false
+    }
   }
   
-  // Adds a new task by adding it to the array of tasks
-  addTask = (event) => {
-    event.preventDefault()
-    
-    if (this.state.newTask) {
-      let newTask = {
-        id: this.state.lastId +1,
-        name: this.state.newTask,
-      }
-      
-      let taskArray = this.state.taskArray
-      taskArray.push(newTask)
-      
+  handleNewTask = (e) => {
+    var input = e.target.id
+    const newTask = this.state.newTask
+    switch (input) {
+      case 'description':
+        newTask.description = e.target.value
+          this.setState({
+            newTask
+          })
+        break;
+      case 'author':
+        newTask.author = e.target.value
+        this.setState({
+          newTask
+        })
+        break;
+      case 'location':
+        newTask.location = e.target.value
+        this.setState({
+          newTask
+        })
+        break;
+      case 'solved':
+        newTask.solved = e.target.checked
+        this.setState({
+          newTask
+        })
+        break;
+      default:
+        break;
+    }
+  }
+
+  addTodo = (e) => {
+    e.preventDefault()
+    let data = this.state.newTask
+    console.log(data)
+    axios.post(
+      'http://localhost:5000/todos/',
+       data).then((res) => {
+         this.getTodos()
+         this.setState({
+           newTask: {}
+         })
+        //  console.log(res)
+       }).catch((err) => {
+        //  console.log(err)
+       })
+  }
+
+  getTodos = () => {
+    axios.get('http://localhost:5000/todos/', {
+    }).then((response) => {
+      let taskArray = response.data
+      // console.log(taskArray)
+      // console.log(response)
       this.setState({
-        taskArray,
-        newTask: '',
-        lastId: this.state.lastId +1
+        taskArray
       })
-    } return
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
+
+  componentDidMount = () => {
+    this.getTodos()
   }
 
   render() { 
     return ( 
-      <div className="taskList">
-          <h1 className="taskListHeader "> 
-            Tasklist
-          </h1>
+      <div>
+        <h1>Fastighet - Todo</h1>
+        <form onSubmit={this.addTodo} onChange={this.handleNewTask}>
+          <input id="description" type="text" placeholder="Description" required></input>
+          <input id="location" type="text" placeholder="Location" required></input>
+          <input id="author" type="text" placeholder="Author" required></input>
+          <input id="solved" type="checkbox"></input>
+          <input type="submit" value="Add" onClick={this.addTodo}></input>
+        </form>
+        <div>
+          <h1>Tasks</h1>
+            
+          {this.state.taskArray.length ? 
+            <table className="taskTableHeader">
+              <thead>
+                <tr>
+                  <td>Description</td>
+                  <td>Location</td>
+                  <td>Author</td>
+                  <td>Solved</td>
+                </tr>
+              </thead>
+            </table>
+            : 'noTable'}  
 
-          <div className="taskListContainer">
-
-            <div>
-              <form className="addTaskContainer" onSubmit={this.addTask}> 
-                <input placeholder="Add Task.." type="text" value={this.state.newTask} onChange={this.handleNewTask}/>
-              <input value="ADD" type="button" onClick={this.addTask} />
-              </form>
-            </div>
-
-            {this.state.taskArray.map(task => (
-              <Task 
-                name={task.name}
-                key={task.id}
-                onDelete={() => this.onDelete(task.id)}
-                
-                />
-                
-            ))}
-
-          </div>
-      </div> );
+          {this.state.taskArray.length ? this.state.taskArray.map(todo => {
+            return (
+            <table className="taskTableData">
+              <tbody>
+                <tr>
+                {/* <div key={todo._id} className="singleTask"> */}
+                  <td className="tableData">{todo.description}</td>
+                  <td className="tableData">{todo.location}</td>
+                  <td className="tableData">{todo.author}</td>
+                  <td className="tableData">{todo.solved === true ? 'Fixad' : 'Ej Fixad'}</td>
+                {/* </div> */}
+                </tr>
+              </tbody>
+            </table>
+            )
+          })
+          : 'There are currently no tasks'}
+        </div>
+      </div>
+      );
   }
 }
  

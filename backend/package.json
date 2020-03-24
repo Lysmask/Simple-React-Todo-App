@@ -1,22 +1,20 @@
 {
-  "name": "todo-backend",
+  "name": "backend2",
   "version": "1.0.0",
-  "description": "Backend for todo-application",
-  "main": "server.js",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "nodem server.js",
-    "server": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon app.js"
   },
-  "author": "Pontus Ljungstrand",
-  "license": "WTFPL",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "concurrently": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.3"
-  },
-  "devDependencies": {
+    "mongodb": "^3.5.5",
+    "mongoose": "^5.9.4",
     "nodemon": "^2.0.2"
   }
 }

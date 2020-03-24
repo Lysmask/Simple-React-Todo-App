@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const TodoSchema = new mongoose.Schema({
   description: {
-    type: String, 
+    type: String,
     required: true
   },
   location: {
@@ -10,7 +10,7 @@ const TodoSchema = new mongoose.Schema({
     required: true
   },
   author: {
-    type: String, 
+    type: String,
     required: true
   },
   solved: {
@@ -20,4 +20,4 @@ const TodoSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('todo', TodoSchema)
+module.exports = mongoose.model('Todos', TodoSchema)
