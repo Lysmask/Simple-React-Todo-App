@@ -1,26 +1,52 @@
-.taskTableHeader {
-  font-size: 2rem;
-  text-decoration: underline;
-  width: 100%;
-  background-color: cyan;
+html {
+  margin-top: 2rem;
 }
-.taskTableHeader td {
+form{
+  display: flex;
+  justify-content: space-between;
+  /* flex-direction: column; */
+  background-color: #d2b265;
+  padding: .8rem;
+  width: 80%;
+  margin: 2rem auto 2rem auto;
+}
+
+input {
+  background-color: transparent;
+  font-size: 1.5rem;
+  padding: .5rem;
+  border: none;
+  border-bottom: 1px solid black;
+}
+
+input[type="submit"] {
+  border: 2px solid black;
+  padding: 0rem 2rem 0rem 2rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.tableHeader {
+  font-size: 1.5rem;
   width:25%;
-  padding: 1rem;
-  padding-bottom: 2rem;
-  background-color: black;
-  color: white;
+  padding: 1rem 1rem 1rem .4rem;
+  background-color: white;
+  color: black;
+  /* margin-bottom: 2rem; */
 }
+
 .taskTableData {
-  width: 100%;
+  margin: auto;
+  width: 80%;
+  max-width: 1600px;
 }
+
 .tableData {
   width: 25%;
   padding: .5rem;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
-
 tr:nth-of-type(odd){
-  background-color: orange;
+  background-color: #d2b265;;
 }

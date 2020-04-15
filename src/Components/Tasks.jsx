@@ -13,6 +13,10 @@ class Tasks extends Component {
       solved: false
     }
   }
+
+  componentDidMount = () => {
+    this.getTodos()
+  }
   
   handleNewTask = (e) => {
     var input = e.target.id
@@ -68,8 +72,6 @@ class Tasks extends Component {
     axios.get('http://localhost:5000/todos/', {
     }).then((response) => {
       let taskArray = response.data
-      // console.log(taskArray)
-      // console.log(response)
       this.setState({
         taskArray
       })
@@ -78,54 +80,64 @@ class Tasks extends Component {
     })
   }
 
-  componentDidMount = () => {
-    this.getTodos()
+  toggleSolved(task) {
+    let url = 'http://localhost:5000/todos/' + task
+    console.log(url)
+      axios.patch(url, {
+        }).then((res) => {
+          console.log(res)
+          this.getTodos()
+    })
+  }
+
+  renderTableHeader = () => {
+    return (  
+      <tr>
+       <td className="tableHeader">Description</td>
+       <td className="tableHeader">Location</td>
+       <td className="tableHeader">Author</td>
+       <td className="tableHeader">Solved</td>
+      </tr>
+    )
+  }
+
+  renderTableData = () => {
+    return this.state.taskArray.map((todo) => {
+      return (
+        <tr key={todo._id}>
+          <td className="tableData">{todo.description}</td>
+          <td className="tableData">{todo.location}</td>
+          <td className="tableData">{todo.author}</td>
+          <td className="tableData">{todo.solved === true ? 'Fixad' : 'Ej Fixad'}</td>
+          <td><button onClick={ () => { this.toggleSolved(todo._id) } }> {todo.solved === true ? 'Unsolve' : 'Solve'} </button></td>
+        </tr>
+      )
+    })
   }
 
   render() { 
     return ( 
       <div>
-        <h1>Fastighet - Todo</h1>
+        <h1 style={{textAlign:"center"}}>Todo List</h1>
         <form onSubmit={this.addTodo} onChange={this.handleNewTask}>
           <input id="description" type="text" placeholder="Description" required></input>
           <input id="location" type="text" placeholder="Location" required></input>
           <input id="author" type="text" placeholder="Author" required></input>
-          <input id="solved" type="checkbox"></input>
           <input type="submit" value="Add" onClick={this.addTodo}></input>
         </form>
         <div>
-          <h1>Tasks</h1>
-            
-          {this.state.taskArray.length ? 
-            <table className="taskTableHeader">
-              <thead>
-                <tr>
-                  <td>Description</td>
-                  <td>Location</td>
-                  <td>Author</td>
-                  <td>Solved</td>
-                </tr>
-              </thead>
-            </table>
-            : 'noTable'}  
 
-          {this.state.taskArray.length ? this.state.taskArray.map(todo => {
-            return (
+
+          {this.state.taskArray.length ? 
             <table className="taskTableData">
+              <thead>
+                {this.renderTableHeader()}
+              </thead>
               <tbody>
-                <tr>
-                {/* <div key={todo._id} className="singleTask"> */}
-                  <td className="tableData">{todo.description}</td>
-                  <td className="tableData">{todo.location}</td>
-                  <td className="tableData">{todo.author}</td>
-                  <td className="tableData">{todo.solved === true ? 'Fixad' : 'Ej Fixad'}</td>
-                {/* </div> */}
-                </tr>
+                {this.renderTableData()}
               </tbody>
             </table>
-            )
-          })
-          : 'There are currently no tasks'}
+            : 'Currently No Tasks' }
         </div>
       </div>
       );

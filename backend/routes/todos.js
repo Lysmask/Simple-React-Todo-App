@@ -40,17 +40,20 @@ router.post('/', async (req, res) => {
   }
 })
 
-//Update specific post
+//Change value of todo's solved
 router.patch('/:todoId', async (req, res) => {
-  try {
-    const updatedTodo = await Todo.updateOne(
-    { _id: req.params.todoId},
-    { $set : {description: req.body.description}
-  })
-    res.json(updatedTodo)
-  } catch(err) {
-    res.json(err)
-  }
+  let todo_id = req.params.todoId
+    try {
+      let todo = await Todo.findById(todo_id)
+      let isSolved = todo.solved
+        await Todo.updateOne(
+          { _id: todo_id },
+          { $set: {solved: !isSolved}}
+        )
+        res.json(res)
+    } catch(err) {
+      res.json(err)
+    }
 })
 
 // Delete specific todo
