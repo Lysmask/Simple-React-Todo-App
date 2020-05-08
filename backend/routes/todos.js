@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 
 // Return specific todo
 router.get('/:todoId', async (req, res) => {
-  // console.log(req.params.todoId)
   try {
     const todo = await Todo.findById(req.params.todoId)
     res.json(todo)

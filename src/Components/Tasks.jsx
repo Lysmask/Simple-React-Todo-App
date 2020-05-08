@@ -68,6 +68,16 @@ class Tasks extends Component {
        })
   }
 
+   async removeTodo(id) {
+    // e.preventDefault()
+    let url = 'http://localhost:5000/todos/' + id
+     await axios.delete(url).then((res) => {
+      console.log(res)
+    }).then( 
+      this.getTodos()
+    )
+  }
+
   getTodos = () => {
     axios.get('http://localhost:5000/todos/', {
     }).then((response) => {
@@ -96,20 +106,37 @@ class Tasks extends Component {
        <td className="tableHeader">Description</td>
        <td className="tableHeader">Location</td>
        <td className="tableHeader">Author</td>
-       <td className="tableHeader">Solved</td>
+       {/* <td className="tableHeader">Solved</td> */}
       </tr>
     )
   }
 
+  renderRemoveButton(todo) {
+    return(
+      <button className="solveButtons" onClick={() => {this.removeTodo(todo._id)}}>
+        Remove
+      </button>
+    )
+  }
+
   renderTableData = () => {
-    return this.state.taskArray.map((todo) => {
+    let sortedArray = this.state.taskArray.sort((a) => {
+     return a.solved ? 1 : -1
+    })
+    return sortedArray.map((todo) => {
       return (
-        <tr key={todo._id}>
+        <tr className={ (todo.solved ? 'fixed' : 'notFixed') } key={todo._id}>
           <td className="tableData">{todo.description}</td>
           <td className="tableData">{todo.location}</td>
           <td className="tableData">{todo.author}</td>
-          <td className="tableData">{todo.solved === true ? 'Fixad' : 'Ej Fixad'}</td>
-          <td><button onClick={ () => { this.toggleSolved(todo._id) } }> {todo.solved === true ? 'Unsolve' : 'Solve'} </button></td>
+          {/* <td className="tableData">{todo.solved === true ? 'Fixad' : 'Ej Fixad'}</td> */}
+          <td>
+            <button className="solveButtons" onClick={ () => { this.toggleSolved(todo._id) } }>
+               {todo.solved === true ? 'Unsolve' : 'Solve'}
+            </button>
+            {todo.solved ? this.renderRemoveButton(todo) : ''}
+            
+          </td>
         </tr>
       )
     })

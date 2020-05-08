@@ -1,13 +1,21 @@
 html {
   margin-top: 2rem;
+  background: rgb(210,178,101);
+  background: linear-gradient(90deg, rgba(210,178,101,1) 0%, rgba(153,119,25,1) 94%);
+
+}
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  background-color: transparent
 }
 form{
   display: flex;
   justify-content: space-between;
   /* flex-direction: column; */
-  background-color: #d2b265;
+  background-color: transparent;
   padding: .8rem;
   width: 80%;
+  max-width: 1600px;
   margin: 2rem auto 2rem auto;
 }
 
@@ -30,9 +38,8 @@ input[type="submit"] {
   font-size: 1.5rem;
   width:25%;
   padding: 1rem 1rem 1rem .4rem;
-  background-color: white;
   color: black;
-  /* margin-bottom: 2rem; */
+  text-decoration: underline;
 }
 
 .taskTableData {
@@ -48,5 +55,19 @@ input[type="submit"] {
 }
 
 tr:nth-of-type(odd){
-  background-color: #d2b265;;
+  background-color: transparent;;
+}
+
+.fixed {
+  /* background-color: lightgray !important; */
+  text-decoration: line-through;
+  font-style: italic;
+  background-color: rgba(0,0,0, 0.25) !important
+}
+
+.solveButtons {
+  background-color: transparent;
+  border: 2px solid black;
+  margin: 1px;
+  font-weight: bold;
 }
